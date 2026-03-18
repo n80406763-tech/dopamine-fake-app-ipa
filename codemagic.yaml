@@ -1,9 +1,21 @@
 workflows:
+  ios-workflow:
+    name: iOS Build
 
-    sample-workflow:
+    instance_type: mac_mini_m2
 
-        name: Codemagic Sample Workflow
+    environment:
+      xcode: latest
 
-        max_build_duration: 120
+    scripts:
+      - name: Build app
+        script: |
+          xcodebuild \
+          -project DopamineApp.xcodeproj \
+          -scheme DopamineApp \
+          -sdk iphoneos \
+          -configuration Release \
+          build
 
-        instance_type: mac_mini_m2
+    artifacts:
+      - build/ios/ipa/*.ipa
